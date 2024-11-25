@@ -1,0 +1,996 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="HomelistiDbModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="__EFMigrationsHistory">
+          <Key>
+            <PropertyRef Name="MigrationId" />
+          </Key>
+          <Property Name="MigrationId" Type="nvarchar" MaxLength="150" Nullable="false" />
+          <Property Name="ProductVersion" Type="nvarchar" MaxLength="32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Account">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="username" Type="varchar" MaxLength="255" />
+          <Property Name="password" Type="varchar" MaxLength="255" />
+        </EntityType>
+        <EntityType Name="Categories">
+          <Key>
+            <PropertyRef Name="term_id" />
+          </Key>
+          <Property Name="term_id" Type="int" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="255" />
+          <Property Name="slug" Type="varchar" MaxLength="255" />
+          <Property Name="count" Type="int" />
+        </EntityType>
+        <EntityType Name="Choices">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="255" />
+        </EntityType>
+        <EntityType Name="Contact">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="location_term_id" Type="int" />
+          <Property Name="address" Type="varchar" MaxLength="255" />
+          <Property Name="phone" Type="varchar" MaxLength="15" />
+          <Property Name="whatsapp_number" Type="varchar" MaxLength="15" />
+          <Property Name="email" Type="varchar" MaxLength="255" />
+        </EntityType>
+        <EntityType Name="CustomFields">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="label" Type="varchar" MaxLength="255" />
+        </EntityType>
+        <EntityType Name="CustomFields_Choices">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="choices_id" Type="varchar" MaxLength="255" />
+          <Property Name="custom_fields_id" Type="int" />
+        </EntityType>
+        <EntityType Name="CustomFields_Values">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="values_id" Type="int" />
+          <Property Name="custom_fields_id" Type="int" />
+          <Property Name="listing_id" Type="int" />
+        </EntityType>
+        <EntityType Name="Images">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="listing_id" Type="int" />
+          <Property Name="title" Type="varchar" MaxLength="255" />
+          <Property Name="url" Type="varchar" MaxLength="255" />
+          <Property Name="alt" Type="varchar" MaxLength="255" />
+        </EntityType>
+        <EntityType Name="Listings">
+          <Key>
+            <PropertyRef Name="listing_id" />
+          </Key>
+          <Property Name="listing_id" Type="int" Nullable="false" />
+          <Property Name="author_id" Type="int" />
+          <Property Name="title" Type="varchar" MaxLength="255" />
+          <Property Name="price" Type="varchar" MaxLength="20" />
+          <Property Name="category_term_id" Type="int" />
+          <Property Name="ad_type_id" Type="varchar" MaxLength="255" />
+          <Property Name="view_count" Type="int" />
+          <Property Name="contact_id" Type="int" />
+          <Property Name="description" Type="varchar(max)" />
+        </EntityType>
+        <EntityType Name="Listings_CustomFields">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="listing_id" Type="int" />
+          <Property Name="custom_fields_id" Type="int" />
+        </EntityType>
+        <EntityType Name="ListingTypes">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="255" />
+        </EntityType>
+        <EntityType Name="Locations">
+          <Key>
+            <PropertyRef Name="term_id" />
+          </Key>
+          <Property Name="term_id" Type="int" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="255" />
+          <Property Name="slug" Type="varchar" MaxLength="255" />
+          <Property Name="count" Type="int" />
+        </EntityType>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="first_name" Type="varchar" MaxLength="255" />
+          <Property Name="last_name" Type="varchar" MaxLength="255" />
+          <Property Name="username" Type="varchar" MaxLength="255" />
+          <Property Name="contact_id" Type="int" />
+          <Property Name="account_id" Type="int" />
+        </EntityType>
+        <EntityType Name="Valuess">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="data" Type="varchar" MaxLength="255" />
+        </EntityType>
+        <Association Name="FK__Contact__locatio__25518C17">
+          <End Role="Locations" Type="Self.Locations" Multiplicity="0..1" />
+          <End Role="Contact" Type="Self.Contact" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Locations">
+              <PropertyRef Name="term_id" />
+            </Principal>
+            <Dependent Role="Contact">
+              <PropertyRef Name="location_term_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__CustomFie__choic__489AC854">
+          <End Role="Choices" Type="Self.Choices" Multiplicity="0..1" />
+          <End Role="CustomFields_Choices" Type="Self.CustomFields_Choices" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Choices">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="CustomFields_Choices">
+              <PropertyRef Name="choices_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__CustomFie__custo__498EEC8D">
+          <End Role="CustomFields" Type="Self.CustomFields" Multiplicity="0..1" />
+          <End Role="CustomFields_Choices" Type="Self.CustomFields_Choices" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CustomFields">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="CustomFields_Choices">
+              <PropertyRef Name="custom_fields_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__CustomFie__custo__4F47C5E3">
+          <End Role="CustomFields" Type="Self.CustomFields" Multiplicity="0..1" />
+          <End Role="CustomFields_Values" Type="Self.CustomFields_Values" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CustomFields">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="CustomFields_Values">
+              <PropertyRef Name="custom_fields_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__CustomFie__value__4E53A1AA">
+          <End Role="Valuess" Type="Self.Valuess" Multiplicity="0..1" />
+          <End Role="CustomFields_Values" Type="Self.CustomFields_Values" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Valuess">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="CustomFields_Values">
+              <PropertyRef Name="values_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Images__listing___3E1D39E1">
+          <End Role="Listings" Type="Self.Listings" Multiplicity="0..1" />
+          <End Role="Images" Type="Self.Images" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Listings">
+              <PropertyRef Name="listing_id" />
+            </Principal>
+            <Dependent Role="Images">
+              <PropertyRef Name="listing_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Listings___custo__45BE5BA9">
+          <End Role="CustomFields" Type="Self.CustomFields" Multiplicity="0..1" />
+          <End Role="Listings_CustomFields" Type="Self.Listings_CustomFields" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CustomFields">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Listings_CustomFields">
+              <PropertyRef Name="custom_fields_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Listings___listi__44CA3770">
+          <End Role="Listings" Type="Self.Listings" Multiplicity="0..1" />
+          <End Role="Listings_CustomFields" Type="Self.Listings_CustomFields" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Listings">
+              <PropertyRef Name="listing_id" />
+            </Principal>
+            <Dependent Role="Listings_CustomFields">
+              <PropertyRef Name="listing_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Listings__ad_typ__3A4CA8FD">
+          <End Role="ListingTypes" Type="Self.ListingTypes" Multiplicity="0..1" />
+          <End Role="Listings" Type="Self.Listings" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ListingTypes">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Listings">
+              <PropertyRef Name="ad_type_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Listings__author__3864608B">
+          <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
+          <End Role="Listings" Type="Self.Listings" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Listings">
+              <PropertyRef Name="author_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Listings__catego__395884C4">
+          <End Role="Categories" Type="Self.Categories" Multiplicity="0..1" />
+          <End Role="Listings" Type="Self.Listings" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Categories">
+              <PropertyRef Name="term_id" />
+            </Principal>
+            <Dependent Role="Listings">
+              <PropertyRef Name="category_term_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Listings__contac__3B40CD36">
+          <End Role="Contact" Type="Self.Contact" Multiplicity="0..1" />
+          <End Role="Listings" Type="Self.Listings" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Contact">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Listings">
+              <PropertyRef Name="contact_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Users__account_i__2EDAF651">
+          <End Role="Account" Type="Self.Account" Multiplicity="0..1" />
+          <End Role="Users" Type="Self.Users" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Account">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Users">
+              <PropertyRef Name="account_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Users__contact_i__2DE6D218">
+          <End Role="Contact" Type="Self.Contact" Multiplicity="0..1" />
+          <End Role="Users" Type="Self.Users" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Contact">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Users">
+              <PropertyRef Name="contact_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_customfields_values_listing_id">
+          <End Role="Listings" Type="Self.Listings" Multiplicity="0..1" />
+          <End Role="CustomFields_Values" Type="Self.CustomFields_Values" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Listings">
+              <PropertyRef Name="listing_id" />
+            </Principal>
+            <Dependent Role="CustomFields_Values">
+              <PropertyRef Name="listing_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="HomelistiDbModelStoreContainer">
+          <EntitySet Name="__EFMigrationsHistory" EntityType="Self.__EFMigrationsHistory" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Account" EntityType="Self.Account" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Categories" EntityType="Self.Categories" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Choices" EntityType="Self.Choices" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Contact" EntityType="Self.Contact" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CustomFields" EntityType="Self.CustomFields" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CustomFields_Choices" EntityType="Self.CustomFields_Choices" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CustomFields_Values" EntityType="Self.CustomFields_Values" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Images" EntityType="Self.Images" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Listings" EntityType="Self.Listings" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Listings_CustomFields" EntityType="Self.Listings_CustomFields" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ListingTypes" EntityType="Self.ListingTypes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Locations" EntityType="Self.Locations" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Valuess" EntityType="Self.Valuess" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__Contact__locatio__25518C17" Association="Self.FK__Contact__locatio__25518C17">
+            <End Role="Locations" EntitySet="Locations" />
+            <End Role="Contact" EntitySet="Contact" />
+          </AssociationSet>
+          <AssociationSet Name="FK__CustomFie__choic__489AC854" Association="Self.FK__CustomFie__choic__489AC854">
+            <End Role="Choices" EntitySet="Choices" />
+            <End Role="CustomFields_Choices" EntitySet="CustomFields_Choices" />
+          </AssociationSet>
+          <AssociationSet Name="FK__CustomFie__custo__498EEC8D" Association="Self.FK__CustomFie__custo__498EEC8D">
+            <End Role="CustomFields" EntitySet="CustomFields" />
+            <End Role="CustomFields_Choices" EntitySet="CustomFields_Choices" />
+          </AssociationSet>
+          <AssociationSet Name="FK__CustomFie__custo__4F47C5E3" Association="Self.FK__CustomFie__custo__4F47C5E3">
+            <End Role="CustomFields" EntitySet="CustomFields" />
+            <End Role="CustomFields_Values" EntitySet="CustomFields_Values" />
+          </AssociationSet>
+          <AssociationSet Name="FK__CustomFie__value__4E53A1AA" Association="Self.FK__CustomFie__value__4E53A1AA">
+            <End Role="Valuess" EntitySet="Valuess" />
+            <End Role="CustomFields_Values" EntitySet="CustomFields_Values" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Images__listing___3E1D39E1" Association="Self.FK__Images__listing___3E1D39E1">
+            <End Role="Listings" EntitySet="Listings" />
+            <End Role="Images" EntitySet="Images" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Listings___custo__45BE5BA9" Association="Self.FK__Listings___custo__45BE5BA9">
+            <End Role="CustomFields" EntitySet="CustomFields" />
+            <End Role="Listings_CustomFields" EntitySet="Listings_CustomFields" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Listings___listi__44CA3770" Association="Self.FK__Listings___listi__44CA3770">
+            <End Role="Listings" EntitySet="Listings" />
+            <End Role="Listings_CustomFields" EntitySet="Listings_CustomFields" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Listings__ad_typ__3A4CA8FD" Association="Self.FK__Listings__ad_typ__3A4CA8FD">
+            <End Role="ListingTypes" EntitySet="ListingTypes" />
+            <End Role="Listings" EntitySet="Listings" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Listings__author__3864608B" Association="Self.FK__Listings__author__3864608B">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Listings" EntitySet="Listings" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Listings__catego__395884C4" Association="Self.FK__Listings__catego__395884C4">
+            <End Role="Categories" EntitySet="Categories" />
+            <End Role="Listings" EntitySet="Listings" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Listings__contac__3B40CD36" Association="Self.FK__Listings__contac__3B40CD36">
+            <End Role="Contact" EntitySet="Contact" />
+            <End Role="Listings" EntitySet="Listings" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Users__account_i__2EDAF651" Association="Self.FK__Users__account_i__2EDAF651">
+            <End Role="Account" EntitySet="Account" />
+            <End Role="Users" EntitySet="Users" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Users__contact_i__2DE6D218" Association="Self.FK__Users__contact_i__2DE6D218">
+            <End Role="Contact" EntitySet="Contact" />
+            <End Role="Users" EntitySet="Users" />
+          </AssociationSet>
+          <AssociationSet Name="FK_customfields_values_listing_id" Association="Self.FK_customfields_values_listing_id">
+            <End Role="Listings" EntitySet="Listings" />
+            <End Role="CustomFields_Values" EntitySet="CustomFields_Values" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="HomelistiDbModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="C__EFMigrationsHistory">
+          <Key>
+            <PropertyRef Name="MigrationId" />
+          </Key>
+          <Property Name="MigrationId" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ProductVersion" Type="String" MaxLength="32" FixedLength="false" Unicode="true" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Account">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="username" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="password" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Users" Relationship="Self.FK__Users__account_i__2EDAF651" FromRole="Account" ToRole="Users" />
+        </EntityType>
+        <EntityType Name="Category">
+          <Key>
+            <PropertyRef Name="term_id" />
+          </Key>
+          <Property Name="term_id" Type="Int32" Nullable="false" />
+          <Property Name="name" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="slug" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="count" Type="Int32" />
+          <NavigationProperty Name="Listings" Relationship="Self.FK__Listings__catego__395884C4" FromRole="Categories" ToRole="Listings" />
+        </EntityType>
+        <EntityType Name="Choice">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="name" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="CustomFields_Choices" Relationship="Self.FK__CustomFie__choic__489AC854" FromRole="Choices" ToRole="CustomFields_Choices" />
+        </EntityType>
+        <EntityType Name="Contact">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="location_term_id" Type="Int32" />
+          <Property Name="address" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="phone" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="whatsapp_number" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="email" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Location" Relationship="Self.FK__Contact__locatio__25518C17" FromRole="Contact" ToRole="Locations" />
+          <NavigationProperty Name="Listings" Relationship="Self.FK__Listings__contac__3B40CD36" FromRole="Contact" ToRole="Listings" />
+          <NavigationProperty Name="Users" Relationship="Self.FK__Users__contact_i__2DE6D218" FromRole="Contact" ToRole="Users" />
+        </EntityType>
+        <EntityType Name="CustomField">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="label" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="CustomFields_Choices" Relationship="Self.FK__CustomFie__custo__498EEC8D" FromRole="CustomFields" ToRole="CustomFields_Choices" />
+          <NavigationProperty Name="CustomFields_Values" Relationship="Self.FK__CustomFie__custo__4F47C5E3" FromRole="CustomFields" ToRole="CustomFields_Values" />
+          <NavigationProperty Name="Listings_CustomFields" Relationship="Self.FK__Listings___custo__45BE5BA9" FromRole="CustomFields" ToRole="Listings_CustomFields" />
+        </EntityType>
+        <EntityType Name="CustomFields_Choices">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="choices_id" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="custom_fields_id" Type="Int32" />
+          <NavigationProperty Name="Choice" Relationship="Self.FK__CustomFie__choic__489AC854" FromRole="CustomFields_Choices" ToRole="Choices" />
+          <NavigationProperty Name="CustomField" Relationship="Self.FK__CustomFie__custo__498EEC8D" FromRole="CustomFields_Choices" ToRole="CustomFields" />
+        </EntityType>
+        <EntityType Name="CustomFields_Values">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="values_id" Type="Int32" />
+          <Property Name="custom_fields_id" Type="Int32" />
+          <NavigationProperty Name="CustomField" Relationship="Self.FK__CustomFie__custo__4F47C5E3" FromRole="CustomFields_Values" ToRole="CustomFields" />
+          <NavigationProperty Name="Valuess" Relationship="Self.FK__CustomFie__value__4E53A1AA" FromRole="CustomFields_Values" ToRole="Valuess" />
+          <Property Name="listing_id" Type="Int32" />
+          <NavigationProperty Name="Listing" Relationship="HomelistiDbModel.FK_customfields_values_listing_id" FromRole="CustomFields_Values" ToRole="Listing" />
+        </EntityType>
+        <EntityType Name="Image">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="listing_id" Type="Int32" />
+          <Property Name="title" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="url" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="alt" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Listing" Relationship="Self.FK__Images__listing___3E1D39E1" FromRole="Images" ToRole="Listings" />
+        </EntityType>
+        <EntityType Name="Listing">
+          <Key>
+            <PropertyRef Name="listing_id" />
+          </Key>
+          <Property Name="listing_id" Type="Int32" Nullable="false" />
+          <Property Name="author_id" Type="Int32" />
+          <Property Name="title" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="price" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="category_term_id" Type="Int32" />
+          <Property Name="ad_type_id" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="view_count" Type="Int32" />
+          <Property Name="contact_id" Type="Int32" />
+          <NavigationProperty Name="Category" Relationship="Self.FK__Listings__catego__395884C4" FromRole="Listings" ToRole="Categories" />
+          <NavigationProperty Name="Contact" Relationship="Self.FK__Listings__contac__3B40CD36" FromRole="Listings" ToRole="Contact" />
+          <NavigationProperty Name="Images" Relationship="Self.FK__Images__listing___3E1D39E1" FromRole="Listings" ToRole="Images" />
+          <NavigationProperty Name="Listings_CustomFields" Relationship="Self.FK__Listings___listi__44CA3770" FromRole="Listings" ToRole="Listings_CustomFields" />
+          <NavigationProperty Name="ListingType" Relationship="Self.FK__Listings__ad_typ__3A4CA8FD" FromRole="Listings" ToRole="ListingTypes" />
+          <NavigationProperty Name="User" Relationship="Self.FK__Listings__author__3864608B" FromRole="Listings" ToRole="Users" />
+          <NavigationProperty Name="CustomFields_Values" Relationship="HomelistiDbModel.FK_customfields_values_listing_id" FromRole="Listing" ToRole="CustomFields_Values" />
+          <Property Name="description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="Listings_CustomFields">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="listing_id" Type="Int32" />
+          <Property Name="custom_fields_id" Type="Int32" />
+          <NavigationProperty Name="CustomField" Relationship="Self.FK__Listings___custo__45BE5BA9" FromRole="Listings_CustomFields" ToRole="CustomFields" />
+          <NavigationProperty Name="Listing" Relationship="Self.FK__Listings___listi__44CA3770" FromRole="Listings_CustomFields" ToRole="Listings" />
+        </EntityType>
+        <EntityType Name="ListingType">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="name" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Listings" Relationship="Self.FK__Listings__ad_typ__3A4CA8FD" FromRole="ListingTypes" ToRole="Listings" />
+        </EntityType>
+        <EntityType Name="Location">
+          <Key>
+            <PropertyRef Name="term_id" />
+          </Key>
+          <Property Name="term_id" Type="Int32" Nullable="false" />
+          <Property Name="name" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="slug" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="count" Type="Int32" />
+          <NavigationProperty Name="Contacts" Relationship="Self.FK__Contact__locatio__25518C17" FromRole="Locations" ToRole="Contact" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="first_name" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="last_name" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="username" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="contact_id" Type="Int32" />
+          <Property Name="account_id" Type="Int32" />
+          <NavigationProperty Name="Account" Relationship="Self.FK__Users__account_i__2EDAF651" FromRole="Users" ToRole="Account" />
+          <NavigationProperty Name="Contact" Relationship="Self.FK__Users__contact_i__2DE6D218" FromRole="Users" ToRole="Contact" />
+          <NavigationProperty Name="Listings" Relationship="Self.FK__Listings__author__3864608B" FromRole="Users" ToRole="Listings" />
+        </EntityType>
+        <EntityType Name="Valuess">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="data" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="CustomFields_Values" Relationship="Self.FK__CustomFie__value__4E53A1AA" FromRole="Valuess" ToRole="CustomFields_Values" />
+        </EntityType>
+        <Association Name="FK__Users__account_i__2EDAF651">
+          <End Role="Account" Type="Self.Account" Multiplicity="0..1" />
+          <End Role="Users" Type="Self.User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Account">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Users">
+              <PropertyRef Name="account_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Listings__catego__395884C4">
+          <End Role="Categories" Type="Self.Category" Multiplicity="0..1" />
+          <End Role="Listings" Type="Self.Listing" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Categories">
+              <PropertyRef Name="term_id" />
+            </Principal>
+            <Dependent Role="Listings">
+              <PropertyRef Name="category_term_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__CustomFie__choic__489AC854">
+          <End Role="Choices" Type="Self.Choice" Multiplicity="0..1" />
+          <End Role="CustomFields_Choices" Type="Self.CustomFields_Choices" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Choices">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="CustomFields_Choices">
+              <PropertyRef Name="choices_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Contact__locatio__25518C17">
+          <End Role="Locations" Type="Self.Location" Multiplicity="0..1" />
+          <End Role="Contact" Type="Self.Contact" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Locations">
+              <PropertyRef Name="term_id" />
+            </Principal>
+            <Dependent Role="Contact">
+              <PropertyRef Name="location_term_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Listings__contac__3B40CD36">
+          <End Role="Contact" Type="Self.Contact" Multiplicity="0..1" />
+          <End Role="Listings" Type="Self.Listing" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Contact">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Listings">
+              <PropertyRef Name="contact_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Users__contact_i__2DE6D218">
+          <End Role="Contact" Type="Self.Contact" Multiplicity="0..1" />
+          <End Role="Users" Type="Self.User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Contact">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Users">
+              <PropertyRef Name="contact_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__CustomFie__custo__498EEC8D">
+          <End Role="CustomFields" Type="Self.CustomField" Multiplicity="0..1" />
+          <End Role="CustomFields_Choices" Type="Self.CustomFields_Choices" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CustomFields">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="CustomFields_Choices">
+              <PropertyRef Name="custom_fields_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__CustomFie__custo__4F47C5E3">
+          <End Role="CustomFields" Type="Self.CustomField" Multiplicity="0..1" />
+          <End Role="CustomFields_Values" Type="Self.CustomFields_Values" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CustomFields">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="CustomFields_Values">
+              <PropertyRef Name="custom_fields_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Listings___custo__45BE5BA9">
+          <End Role="CustomFields" Type="Self.CustomField" Multiplicity="0..1" />
+          <End Role="Listings_CustomFields" Type="Self.Listings_CustomFields" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CustomFields">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Listings_CustomFields">
+              <PropertyRef Name="custom_fields_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__CustomFie__value__4E53A1AA">
+          <End Role="Valuess" Type="Self.Valuess" Multiplicity="0..1" />
+          <End Role="CustomFields_Values" Type="Self.CustomFields_Values" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Valuess">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="CustomFields_Values">
+              <PropertyRef Name="values_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Images__listing___3E1D39E1">
+          <End Role="Listings" Type="Self.Listing" Multiplicity="0..1" />
+          <End Role="Images" Type="Self.Image" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Listings">
+              <PropertyRef Name="listing_id" />
+            </Principal>
+            <Dependent Role="Images">
+              <PropertyRef Name="listing_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Listings___listi__44CA3770">
+          <End Role="Listings" Type="Self.Listing" Multiplicity="0..1" />
+          <End Role="Listings_CustomFields" Type="Self.Listings_CustomFields" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Listings">
+              <PropertyRef Name="listing_id" />
+            </Principal>
+            <Dependent Role="Listings_CustomFields">
+              <PropertyRef Name="listing_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Listings__ad_typ__3A4CA8FD">
+          <End Role="ListingTypes" Type="Self.ListingType" Multiplicity="0..1" />
+          <End Role="Listings" Type="Self.Listing" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ListingTypes">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Listings">
+              <PropertyRef Name="ad_type_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Listings__author__3864608B">
+          <End Role="Users" Type="Self.User" Multiplicity="0..1" />
+          <End Role="Listings" Type="Self.Listing" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Listings">
+              <PropertyRef Name="author_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="HomelistiDbEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="C__EFMigrationsHistory" EntityType="Self.C__EFMigrationsHistory" />
+          <EntitySet Name="Accounts" EntityType="Self.Account" />
+          <EntitySet Name="Categories" EntityType="Self.Category" />
+          <EntitySet Name="Choices" EntityType="Self.Choice" />
+          <EntitySet Name="Contacts" EntityType="Self.Contact" />
+          <EntitySet Name="CustomFields" EntityType="Self.CustomField" />
+          <EntitySet Name="CustomFields_Choices" EntityType="Self.CustomFields_Choices" />
+          <EntitySet Name="CustomFields_Values" EntityType="Self.CustomFields_Values" />
+          <EntitySet Name="Images" EntityType="Self.Image" />
+          <EntitySet Name="Listings" EntityType="Self.Listing" />
+          <EntitySet Name="Listings_CustomFields" EntityType="Self.Listings_CustomFields" />
+          <EntitySet Name="ListingTypes" EntityType="Self.ListingType" />
+          <EntitySet Name="Locations" EntityType="Self.Location" />
+          <EntitySet Name="Users" EntityType="Self.User" />
+          <EntitySet Name="Valuesses" EntityType="Self.Valuess" />
+          <AssociationSet Name="FK__Users__account_i__2EDAF651" Association="Self.FK__Users__account_i__2EDAF651">
+            <End Role="Account" EntitySet="Accounts" />
+            <End Role="Users" EntitySet="Users" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Listings__catego__395884C4" Association="Self.FK__Listings__catego__395884C4">
+            <End Role="Categories" EntitySet="Categories" />
+            <End Role="Listings" EntitySet="Listings" />
+          </AssociationSet>
+          <AssociationSet Name="FK__CustomFie__choic__489AC854" Association="Self.FK__CustomFie__choic__489AC854">
+            <End Role="Choices" EntitySet="Choices" />
+            <End Role="CustomFields_Choices" EntitySet="CustomFields_Choices" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Contact__locatio__25518C17" Association="Self.FK__Contact__locatio__25518C17">
+            <End Role="Locations" EntitySet="Locations" />
+            <End Role="Contact" EntitySet="Contacts" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Listings__contac__3B40CD36" Association="Self.FK__Listings__contac__3B40CD36">
+            <End Role="Contact" EntitySet="Contacts" />
+            <End Role="Listings" EntitySet="Listings" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Users__contact_i__2DE6D218" Association="Self.FK__Users__contact_i__2DE6D218">
+            <End Role="Contact" EntitySet="Contacts" />
+            <End Role="Users" EntitySet="Users" />
+          </AssociationSet>
+          <AssociationSet Name="FK__CustomFie__custo__498EEC8D" Association="Self.FK__CustomFie__custo__498EEC8D">
+            <End Role="CustomFields" EntitySet="CustomFields" />
+            <End Role="CustomFields_Choices" EntitySet="CustomFields_Choices" />
+          </AssociationSet>
+          <AssociationSet Name="FK__CustomFie__custo__4F47C5E3" Association="Self.FK__CustomFie__custo__4F47C5E3">
+            <End Role="CustomFields" EntitySet="CustomFields" />
+            <End Role="CustomFields_Values" EntitySet="CustomFields_Values" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Listings___custo__45BE5BA9" Association="Self.FK__Listings___custo__45BE5BA9">
+            <End Role="CustomFields" EntitySet="CustomFields" />
+            <End Role="Listings_CustomFields" EntitySet="Listings_CustomFields" />
+          </AssociationSet>
+          <AssociationSet Name="FK__CustomFie__value__4E53A1AA" Association="Self.FK__CustomFie__value__4E53A1AA">
+            <End Role="Valuess" EntitySet="Valuesses" />
+            <End Role="CustomFields_Values" EntitySet="CustomFields_Values" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Images__listing___3E1D39E1" Association="Self.FK__Images__listing___3E1D39E1">
+            <End Role="Listings" EntitySet="Listings" />
+            <End Role="Images" EntitySet="Images" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Listings___listi__44CA3770" Association="Self.FK__Listings___listi__44CA3770">
+            <End Role="Listings" EntitySet="Listings" />
+            <End Role="Listings_CustomFields" EntitySet="Listings_CustomFields" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Listings__ad_typ__3A4CA8FD" Association="Self.FK__Listings__ad_typ__3A4CA8FD">
+            <End Role="ListingTypes" EntitySet="ListingTypes" />
+            <End Role="Listings" EntitySet="Listings" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Listings__author__3864608B" Association="Self.FK__Listings__author__3864608B">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Listings" EntitySet="Listings" />
+          </AssociationSet>
+          <AssociationSet Name="FK_customfields_values_listing_id" Association="HomelistiDbModel.FK_customfields_values_listing_id">
+            <End Role="Listing" EntitySet="Listings" />
+            <End Role="CustomFields_Values" EntitySet="CustomFields_Values" />
+          </AssociationSet>
+        </EntityContainer>
+        <Association Name="FK_customfields_values_listing_id">
+          <End Type="HomelistiDbModel.Listing" Role="Listing" Multiplicity="0..1" />
+          <End Type="HomelistiDbModel.CustomFields_Values" Role="CustomFields_Values" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Listing">
+              <PropertyRef Name="listing_id" />
+            </Principal>
+            <Dependent Role="CustomFields_Values">
+              <PropertyRef Name="listing_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="HomelistiDbModelStoreContainer" CdmEntityContainer="HomelistiDbEntities">
+          <EntitySetMapping Name="C__EFMigrationsHistory">
+            <EntityTypeMapping TypeName="HomelistiDbModel.C__EFMigrationsHistory">
+              <MappingFragment StoreEntitySet="__EFMigrationsHistory">
+                <ScalarProperty Name="MigrationId" ColumnName="MigrationId" />
+                <ScalarProperty Name="ProductVersion" ColumnName="ProductVersion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Accounts">
+            <EntityTypeMapping TypeName="HomelistiDbModel.Account">
+              <MappingFragment StoreEntitySet="Account">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="username" ColumnName="username" />
+                <ScalarProperty Name="password" ColumnName="password" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Categories">
+            <EntityTypeMapping TypeName="HomelistiDbModel.Category">
+              <MappingFragment StoreEntitySet="Categories">
+                <ScalarProperty Name="term_id" ColumnName="term_id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="slug" ColumnName="slug" />
+                <ScalarProperty Name="count" ColumnName="count" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Choices">
+            <EntityTypeMapping TypeName="HomelistiDbModel.Choice">
+              <MappingFragment StoreEntitySet="Choices">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Contacts">
+            <EntityTypeMapping TypeName="HomelistiDbModel.Contact">
+              <MappingFragment StoreEntitySet="Contact">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="location_term_id" ColumnName="location_term_id" />
+                <ScalarProperty Name="address" ColumnName="address" />
+                <ScalarProperty Name="phone" ColumnName="phone" />
+                <ScalarProperty Name="whatsapp_number" ColumnName="whatsapp_number" />
+                <ScalarProperty Name="email" ColumnName="email" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CustomFields">
+            <EntityTypeMapping TypeName="HomelistiDbModel.CustomField">
+              <MappingFragment StoreEntitySet="CustomFields">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="label" ColumnName="label" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CustomFields_Choices">
+            <EntityTypeMapping TypeName="HomelistiDbModel.CustomFields_Choices">
+              <MappingFragment StoreEntitySet="CustomFields_Choices">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="choices_id" ColumnName="choices_id" />
+                <ScalarProperty Name="custom_fields_id" ColumnName="custom_fields_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CustomFields_Values">
+            <EntityTypeMapping TypeName="HomelistiDbModel.CustomFields_Values">
+              <MappingFragment StoreEntitySet="CustomFields_Values">
+                <ScalarProperty Name="listing_id" ColumnName="listing_id" />
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="values_id" ColumnName="values_id" />
+                <ScalarProperty Name="custom_fields_id" ColumnName="custom_fields_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Images">
+            <EntityTypeMapping TypeName="HomelistiDbModel.Image">
+              <MappingFragment StoreEntitySet="Images">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="listing_id" ColumnName="listing_id" />
+                <ScalarProperty Name="title" ColumnName="title" />
+                <ScalarProperty Name="url" ColumnName="url" />
+                <ScalarProperty Name="alt" ColumnName="alt" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Listings">
+            <EntityTypeMapping TypeName="HomelistiDbModel.Listing">
+              <MappingFragment StoreEntitySet="Listings">
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="listing_id" ColumnName="listing_id" />
+                <ScalarProperty Name="author_id" ColumnName="author_id" />
+                <ScalarProperty Name="title" ColumnName="title" />
+                <ScalarProperty Name="price" ColumnName="price" />
+                <ScalarProperty Name="category_term_id" ColumnName="category_term_id" />
+                <ScalarProperty Name="ad_type_id" ColumnName="ad_type_id" />
+                <ScalarProperty Name="view_count" ColumnName="view_count" />
+                <ScalarProperty Name="contact_id" ColumnName="contact_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Listings_CustomFields">
+            <EntityTypeMapping TypeName="HomelistiDbModel.Listings_CustomFields">
+              <MappingFragment StoreEntitySet="Listings_CustomFields">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="listing_id" ColumnName="listing_id" />
+                <ScalarProperty Name="custom_fields_id" ColumnName="custom_fields_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ListingTypes">
+            <EntityTypeMapping TypeName="HomelistiDbModel.ListingType">
+              <MappingFragment StoreEntitySet="ListingTypes">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Locations">
+            <EntityTypeMapping TypeName="HomelistiDbModel.Location">
+              <MappingFragment StoreEntitySet="Locations">
+                <ScalarProperty Name="term_id" ColumnName="term_id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="slug" ColumnName="slug" />
+                <ScalarProperty Name="count" ColumnName="count" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="HomelistiDbModel.User">
+              <MappingFragment StoreEntitySet="Users">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="first_name" ColumnName="first_name" />
+                <ScalarProperty Name="last_name" ColumnName="last_name" />
+                <ScalarProperty Name="username" ColumnName="username" />
+                <ScalarProperty Name="contact_id" ColumnName="contact_id" />
+                <ScalarProperty Name="account_id" ColumnName="account_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Valuesses">
+            <EntityTypeMapping TypeName="HomelistiDbModel.Valuess">
+              <MappingFragment StoreEntitySet="Valuess">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="data" ColumnName="data" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="acb37cb5f5e44c9db164becd8a984d5d" Name="Diagram1" ZoomLevel="30">
+        <EntityTypeShape EntityType="HomelistiDbModel.C__EFMigrationsHistory" Width="1.5" PointX="9.75" PointY="11" IsExpanded="true" />
+        <EntityTypeShape EntityType="HomelistiDbModel.Account" Width="1.5" PointX="6" PointY="3.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="HomelistiDbModel.Category" Width="1.5" PointX="3" PointY="4.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="HomelistiDbModel.Choice" Width="1.5" PointX="8.25" PointY="18.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="HomelistiDbModel.Contact" Width="1.5" PointX="3" PointY="7.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="HomelistiDbModel.CustomField" Width="1.5" PointX="8.25" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="HomelistiDbModel.CustomFields_Choices" Width="1.5" PointX="10.5" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="HomelistiDbModel.CustomFields_Values" Width="1.5" PointX="10.5" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="HomelistiDbModel.Image" Width="1.5" PointX="7.5" PointY="11.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="HomelistiDbModel.Listing" Width="1.5" PointX="5.25" PointY="6.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="HomelistiDbModel.Listings_CustomFields" Width="1.5" PointX="10.5" PointY="7.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="HomelistiDbModel.ListingType" Width="1.5" PointX="3" PointY="11" IsExpanded="true" />
+        <EntityTypeShape EntityType="HomelistiDbModel.Location" Width="1.5" PointX="0.75" PointY="7.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="HomelistiDbModel.User" Width="1.5" PointX="8.25" PointY="7.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="HomelistiDbModel.Valuess" Width="1.5" PointX="8.25" PointY="15.625" IsExpanded="true" />
+        <AssociationConnector Association="HomelistiDbModel.FK__Users__account_i__2EDAF651" ManuallyRouted="false" />
+        <AssociationConnector Association="HomelistiDbModel.FK__Listings__catego__395884C4" ManuallyRouted="false" />
+        <AssociationConnector Association="HomelistiDbModel.FK__CustomFie__choic__489AC854" ManuallyRouted="false" />
+        <AssociationConnector Association="HomelistiDbModel.FK__Contact__locatio__25518C17" ManuallyRouted="false" />
+        <AssociationConnector Association="HomelistiDbModel.FK__Listings__contac__3B40CD36" ManuallyRouted="false" />
+        <AssociationConnector Association="HomelistiDbModel.FK__Users__contact_i__2DE6D218" ManuallyRouted="false" />
+        <AssociationConnector Association="HomelistiDbModel.FK__CustomFie__custo__498EEC8D" ManuallyRouted="false" />
+        <AssociationConnector Association="HomelistiDbModel.FK__CustomFie__custo__4F47C5E3" ManuallyRouted="false" />
+        <AssociationConnector Association="HomelistiDbModel.FK__Listings___custo__45BE5BA9" ManuallyRouted="false" />
+        <AssociationConnector Association="HomelistiDbModel.FK__CustomFie__value__4E53A1AA" ManuallyRouted="false" />
+        <AssociationConnector Association="HomelistiDbModel.FK__Images__listing___3E1D39E1" ManuallyRouted="false" />
+        <AssociationConnector Association="HomelistiDbModel.FK__Listings___listi__44CA3770" ManuallyRouted="false" />
+        <AssociationConnector Association="HomelistiDbModel.FK__Listings__ad_typ__3A4CA8FD" ManuallyRouted="false" />
+        <AssociationConnector Association="HomelistiDbModel.FK__Listings__author__3864608B" ManuallyRouted="false" />
+        <AssociationConnector Association="HomelistiDbModel.FK_customfields_values_listing_id" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
