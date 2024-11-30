@@ -1,6 +1,7 @@
 ﻿using homelisti_API.Models.Domain;
 using HomelistiAPI.Db;
 using Microsoft.IdentityModel.Tokens;
+using Newtonsoft.Json.Linq;
 using Ninject.Activation;
 using Ninject.Planning.Targets;
 using System;
@@ -96,6 +97,7 @@ namespace HomelistiAPI.Controllers
 
                 foreach (var temp in custom_fields)
                 {
+                    
                     List<ChoiceDTO> choices = WebApiApplication._mapper.Map<List<ChoiceDTO>>(_dbContext.CustomFields_Choices
                     .Where(c => c.custom_fields_id == temp.id)
                     .Select(c => c.Choice)
@@ -179,21 +181,36 @@ namespace HomelistiAPI.Controllers
         }
         [HttpPost]
         [Authorize]
-        public IHttpActionResult Post( int author_id, string title, string price, int category_id, string listing_type, int tv, int air, int barbeque, int gym, int swim, int laundry, int microwave, int outdoor, int lawn, int refrigerator, int sauna, int washer, int parking, int bed, int bath)
+        public IHttpActionResult Post( int author_id, string title, string price, int category_id, string description, string listing_type, int tv, int air, int barbeque, int gym, int swim, int laundry, int microwave, int outdoor, int lawn, int refrigerator, int sauna, int washer, int parking, int bed, int bath)
         {
             var _dbContext = new HomelistiDbEntities();
 
-            List<User> user = _dbContext.Users.Where(x => x.id == author_id).ToList();
-            user.ToArray();
+            var user = _dbContext.Users.FirstOrDefault(x => x.id == author_id);
+            if (user == null)
+            {
+                return BadRequest("User not found.");
+            }
 
             Listing listing = new Listing();
+            CustomField customField = new CustomField();
             int listing_id = _dbContext.Listings.ToList().Count() + 1;
 
             listing.listing_id = listing_id;
             listing.author_id = author_id;
             listing.title = title;
             listing.price = price;
+            listing.description = description;
+            if (category_id == 0)
+            {
+                Console.Write(category_id);
+                return BadRequest("category null");
+            }
             var category = _dbContext.Categories.FirstOrDefault(c => c.term_id == category_id);
+            var contact = _dbContext.Contacts.FirstOrDefault(c => c.id == user.Contact.id);
+            if (contact == null)
+            {
+                return BadRequest("Contact not found.");
+            }
             if (category == null)
             {
                 listing.Category = category;
@@ -202,64 +219,94 @@ namespace HomelistiAPI.Controllers
             listing.Category = category;
             //listing.category_term_id = category_id;
             listing.ad_type_id = listing_type;
-            listing.view_count = 0;
+            listing.view_count = 0; 
+            listing.Contact = contact;
             //listing.contact_id = user[0].contact_id;
             _dbContext.Listings.Add(listing);
             _dbContext.SaveChanges();
 
             int listings_cus_id = _dbContext.Listings_CustomFields.ToList().Count() + 1;
             Listings_CustomFields listings_CustomFields = new Listings_CustomFields();
+            listings_CustomFields.CustomField = new CustomField();
             listings_CustomFields.id = listings_cus_id;
-            listings_CustomFields.listing_id = listing_id;
-            listings_CustomFields.custom_fields_id = 4216;
+            listings_CustomFields.Listing = listing;
+            //listings_CustomFields.listing_id = listing_id;
+            listings_CustomFields.custom_fields_id = 1;
+            CustomField existingCustomField1 = _dbContext.CustomFields.SingleOrDefault(cf => cf.id == 1);
+            listings_CustomFields.CustomField = existingCustomField1;
             _dbContext.Listings_CustomFields.Add(listings_CustomFields);
             _dbContext.SaveChanges();
 
             listings_CustomFields = new Listings_CustomFields();
+            //listings_CustomFields.CustomField = new CustomField();
             listings_CustomFields.id = listings_cus_id + 1;
-            listings_CustomFields.listing_id = listing_id;
-            listings_CustomFields.custom_fields_id = 4323;
+            listings_CustomFields.Listing = listing;
+            CustomField existingCustomField2 = _dbContext.CustomFields.SingleOrDefault(cf => cf.id == 2);
+            listings_CustomFields.CustomField = existingCustomField2;
+            listings_CustomFields.custom_fields_id = 2;
             _dbContext.Listings_CustomFields.Add(listings_CustomFields);
             _dbContext.SaveChanges();
 
             listings_CustomFields = new Listings_CustomFields();
+            listings_CustomFields.CustomField = new CustomField();
             listings_CustomFields.id = listings_cus_id + 2;
-            listings_CustomFields.listing_id = listing_id;
-            listings_CustomFields.custom_fields_id = 4322;
+            listings_CustomFields.Listing = listing;
+            listings_CustomFields.custom_fields_id = 3;
+            CustomField existingCustomField3 = _dbContext.CustomFields.SingleOrDefault(cf => cf.id == 3);
+            listings_CustomFields.CustomField = existingCustomField3;
+
             _dbContext.Listings_CustomFields.Add(listings_CustomFields);
             _dbContext.SaveChanges();
 
             listings_CustomFields = new Listings_CustomFields();
+            listings_CustomFields.CustomField = new CustomField();
             listings_CustomFields.id = listings_cus_id + 3;
-            listings_CustomFields.listing_id = listing_id;
-            listings_CustomFields.custom_fields_id = 4316;
+            listings_CustomFields.Listing = listing;
+            listings_CustomFields.custom_fields_id = 4;
+            CustomField existingCustomField4 = _dbContext.CustomFields.SingleOrDefault(cf => cf.id == 4);
+            listings_CustomFields.CustomField = existingCustomField4;
             _dbContext.Listings_CustomFields.Add(listings_CustomFields);
             _dbContext.SaveChanges();
 
             listings_CustomFields = new Listings_CustomFields();
+            listings_CustomFields.CustomField = new CustomField();
             listings_CustomFields.id = listings_cus_id + 4;
-            listings_CustomFields.listing_id = listing_id;
-            listings_CustomFields.custom_fields_id = 4321;
+            listings_CustomFields.Listing = listing;
+            listings_CustomFields.custom_fields_id = 5;
+            CustomField existingCustomField5 = _dbContext.CustomFields.SingleOrDefault(cf => cf.id == 5);
+            listings_CustomFields.CustomField = existingCustomField5;
+
             _dbContext.Listings_CustomFields.Add(listings_CustomFields);
             _dbContext.SaveChanges();
 
             listings_CustomFields = new Listings_CustomFields();
+            listings_CustomFields.CustomField = new CustomField();
             listings_CustomFields.id = listings_cus_id + 5;
-            listings_CustomFields.listing_id = listing_id;
-            listings_CustomFields.custom_fields_id = 4692;
+            listings_CustomFields.Listing = listing;
+            listings_CustomFields.custom_fields_id = 6;
+            CustomField existingCustomField6 = _dbContext.CustomFields.SingleOrDefault(cf => cf.id == 6);
+            listings_CustomFields.CustomField = existingCustomField6;
+
             _dbContext.Listings_CustomFields.Add(listings_CustomFields);
             _dbContext.SaveChanges();
 
             int customFields_val_id = _dbContext.CustomFields_Values.ToList().Count() + 5;
             CustomFields_Values customFields_Values = new CustomFields_Values();
-            if(tv == 1 || tv != -1)
+            
+            if (tv == 1 || tv != -1)
             {
                 customFields_Values = new CustomFields_Values();
                 customFields_val_id += 1;
                 customFields_Values.id = customFields_val_id;
                 customFields_Values.values_id = 1;
-                customFields_Values.custom_fields_id = 4216;
-                customFields_Values.listing_id = listing_id;
+                customFields_Values.custom_fields_id = 1;
+                customFields_Values.Valuess = new Valuess();
+                Valuess existValues = _dbContext.Valuesses.SingleOrDefault(val => val.id == 1);
+                customFields_Values.Valuess = existValues;
+                CustomField existingCustomField = _dbContext.CustomFields.SingleOrDefault(cf => cf.id == 1);
+                customFields_Values.CustomField = new CustomField();
+                customFields_Values.CustomField = existingCustomField;
+                customFields_Values.Listing = listing;
                 _dbContext.CustomFields_Values.Add(customFields_Values);
                 _dbContext.SaveChanges();
             }
@@ -269,8 +316,14 @@ namespace HomelistiAPI.Controllers
                 customFields_val_id += 1;
                 customFields_Values.id = customFields_val_id;
                 customFields_Values.values_id = 2;
-                customFields_Values.custom_fields_id = 4216;
-                customFields_Values.listing_id = listing_id;
+                customFields_Values.custom_fields_id = 1;
+                customFields_Values.Valuess = new Valuess();
+                customFields_Values.CustomField = new CustomField();
+                Valuess existValues = _dbContext.Valuesses.SingleOrDefault(val => val.id == 2);
+                customFields_Values.Valuess = existValues;
+                CustomField existingCustomField = _dbContext.CustomFields.SingleOrDefault(cf => cf.id == 1);
+                customFields_Values.CustomField = existingCustomField;
+                customFields_Values.Listing = listing;
                 _dbContext.CustomFields_Values.Add(customFields_Values);
                 _dbContext.SaveChanges();
             }
@@ -280,8 +333,14 @@ namespace HomelistiAPI.Controllers
                 customFields_val_id += 1;
                 customFields_Values.id = customFields_val_id;
                 customFields_Values.values_id = 3;
-                customFields_Values.custom_fields_id = 4216;
-                customFields_Values.listing_id = listing_id;
+                customFields_Values.custom_fields_id = 1;
+                customFields_Values.Valuess = new Valuess();
+                customFields_Values.CustomField = new CustomField();
+                Valuess existValues = _dbContext.Valuesses.SingleOrDefault(val => val.id == 3);
+                customFields_Values.Valuess = existValues;
+                CustomField existingCustomField = _dbContext.CustomFields.SingleOrDefault(cf => cf.id == 1);
+                customFields_Values.CustomField = existingCustomField;
+                customFields_Values.Listing = listing;
                 _dbContext.CustomFields_Values.Add(customFields_Values);
                 _dbContext.SaveChanges();
             }
@@ -291,8 +350,14 @@ namespace HomelistiAPI.Controllers
                 customFields_val_id += 1;
                 customFields_Values.id = customFields_val_id;
                 customFields_Values.values_id = 4;
-                customFields_Values.custom_fields_id = 4216;
-                customFields_Values.listing_id = listing_id;
+                customFields_Values.custom_fields_id = 1;
+                customFields_Values.Valuess = new Valuess();
+                customFields_Values.CustomField = new CustomField();
+                Valuess existValues = _dbContext.Valuesses.SingleOrDefault(val => val.id == 4);
+                customFields_Values.Valuess = existValues;
+                CustomField existingCustomField = _dbContext.CustomFields.SingleOrDefault(cf => cf.id == 1);
+                customFields_Values.CustomField = existingCustomField;
+                customFields_Values.Listing = listing;
                 _dbContext.CustomFields_Values.Add(customFields_Values);
                 _dbContext.SaveChanges();
             }
@@ -302,8 +367,14 @@ namespace HomelistiAPI.Controllers
                 customFields_val_id += 1;
                 customFields_Values.id = customFields_val_id;
                 customFields_Values.values_id = 5;
-                customFields_Values.custom_fields_id = 4216;
-                customFields_Values.listing_id = listing_id;
+                customFields_Values.custom_fields_id = 1;
+                customFields_Values.Valuess = new Valuess();
+                customFields_Values.CustomField = new CustomField();
+                Valuess existValues = _dbContext.Valuesses.SingleOrDefault(val => val.id == 5);
+                customFields_Values.Valuess = existValues;
+                CustomField existingCustomField = _dbContext.CustomFields.SingleOrDefault(cf => cf.id == 1);
+                customFields_Values.CustomField = existingCustomField;
+                customFields_Values.Listing = listing;
                 _dbContext.CustomFields_Values.Add(customFields_Values);
                 _dbContext.SaveChanges();
             }
@@ -313,8 +384,14 @@ namespace HomelistiAPI.Controllers
                 customFields_val_id += 1;
                 customFields_Values.id = customFields_val_id;
                 customFields_Values.values_id = 6;
-                customFields_Values.custom_fields_id = 4216;
-                customFields_Values.listing_id = listing_id;
+                customFields_Values.custom_fields_id = 1;
+                customFields_Values.Valuess = new Valuess();
+                customFields_Values.CustomField = new CustomField();
+                Valuess existValues = _dbContext.Valuesses.SingleOrDefault(val => val.id == 6);
+                customFields_Values.Valuess = existValues;
+                CustomField existingCustomField = _dbContext.CustomFields.SingleOrDefault(cf => cf.id == 1);
+                customFields_Values.CustomField = existingCustomField;
+                customFields_Values.Listing = listing;
                 _dbContext.CustomFields_Values.Add(customFields_Values);
                 _dbContext.SaveChanges();
             }
@@ -324,8 +401,14 @@ namespace HomelistiAPI.Controllers
                 customFields_val_id += 1;
                 customFields_Values.id = customFields_val_id;
                 customFields_Values.values_id = 7;
-                customFields_Values.custom_fields_id = 4216;
-                customFields_Values.listing_id = listing_id;
+                customFields_Values.custom_fields_id = 1;
+                customFields_Values.Valuess = new Valuess();
+                customFields_Values.CustomField = new CustomField();
+                Valuess existValues = _dbContext.Valuesses.SingleOrDefault(val => val.id == 7);
+                customFields_Values.Valuess = existValues;
+                CustomField existingCustomField = _dbContext.CustomFields.SingleOrDefault(cf => cf.id == 1);
+                customFields_Values.CustomField = existingCustomField;
+                customFields_Values.Listing = listing;
                 _dbContext.CustomFields_Values.Add(customFields_Values);
                 _dbContext.SaveChanges();
             }
@@ -335,8 +418,14 @@ namespace HomelistiAPI.Controllers
                 customFields_val_id += 1;
                 customFields_Values.id = customFields_val_id;
                 customFields_Values.values_id = 8;
-                customFields_Values.custom_fields_id = 4216;
-                customFields_Values.listing_id = listing_id;
+                customFields_Values.custom_fields_id = 1;
+                customFields_Values.Valuess = new Valuess();
+                customFields_Values.CustomField = new CustomField();
+                Valuess existValues = _dbContext.Valuesses.SingleOrDefault(val => val.id == 8);
+                customFields_Values.Valuess = existValues;
+                CustomField existingCustomField = _dbContext.CustomFields.SingleOrDefault(cf => cf.id == 1);
+                customFields_Values.CustomField = existingCustomField;
+                customFields_Values.Listing = listing;
                 _dbContext.CustomFields_Values.Add(customFields_Values);
                 _dbContext.SaveChanges();
             }
@@ -346,8 +435,14 @@ namespace HomelistiAPI.Controllers
                 customFields_val_id += 1;
                 customFields_Values.id = customFields_val_id;
                 customFields_Values.values_id = 9;
-                customFields_Values.custom_fields_id = 4216;
-                customFields_Values.listing_id = listing_id;
+                customFields_Values.custom_fields_id = 1;
+                customFields_Values.Valuess = new Valuess();
+                customFields_Values.CustomField = new CustomField();
+                Valuess existValues = _dbContext.Valuesses.SingleOrDefault(val => val.id == 9);
+                customFields_Values.Valuess = existValues;
+                CustomField existingCustomField = _dbContext.CustomFields.SingleOrDefault(cf => cf.id == 1);
+                customFields_Values.CustomField = existingCustomField;
+                customFields_Values.Listing = listing;
                 _dbContext.CustomFields_Values.Add(customFields_Values);
                 _dbContext.SaveChanges();
             }
@@ -357,8 +452,14 @@ namespace HomelistiAPI.Controllers
                 customFields_val_id += 1;
                 customFields_Values.id = customFields_val_id;
                 customFields_Values.values_id = 10;
-                customFields_Values.custom_fields_id = 4216;
-                customFields_Values.listing_id = listing_id;
+                customFields_Values.custom_fields_id = 1;
+                customFields_Values.Valuess = new Valuess();
+                customFields_Values.CustomField = new CustomField();
+                Valuess existValues = _dbContext.Valuesses.SingleOrDefault(val => val.id == 10);
+                customFields_Values.Valuess = existValues;
+                CustomField existingCustomField = _dbContext.CustomFields.SingleOrDefault(cf => cf.id == 1);
+                customFields_Values.CustomField = existingCustomField;
+                customFields_Values.Listing = listing;
                 _dbContext.CustomFields_Values.Add(customFields_Values);
                 _dbContext.SaveChanges();
             }
@@ -368,8 +469,14 @@ namespace HomelistiAPI.Controllers
                 customFields_val_id += 1;
                 customFields_Values.id = customFields_val_id;
                 customFields_Values.values_id = 11;
-                customFields_Values.custom_fields_id = 4216;
-                customFields_Values.listing_id = listing_id;
+                customFields_Values.custom_fields_id = 1;
+                customFields_Values.Valuess = new Valuess();
+                customFields_Values.CustomField = new CustomField();
+                Valuess existValues = _dbContext.Valuesses.SingleOrDefault(val => val.id == 11);
+                customFields_Values.Valuess = existValues;
+                CustomField existingCustomField = _dbContext.CustomFields.SingleOrDefault(cf => cf.id == 1);
+                customFields_Values.CustomField = existingCustomField;
+                customFields_Values.Listing = listing;
                 _dbContext.CustomFields_Values.Add(customFields_Values);
                 _dbContext.SaveChanges();
             }
@@ -379,8 +486,14 @@ namespace HomelistiAPI.Controllers
                 customFields_val_id += 1;
                 customFields_Values.id = customFields_val_id;
                 customFields_Values.values_id = 12;
-                customFields_Values.custom_fields_id = 4216;
-                customFields_Values.listing_id = listing_id;
+                customFields_Values.custom_fields_id = 1;
+                customFields_Values.Valuess = new Valuess();
+                customFields_Values.CustomField = new CustomField();
+                Valuess existValues = _dbContext.Valuesses.SingleOrDefault(val => val.id == 12);
+                customFields_Values.Valuess = existValues;
+                CustomField existingCustomField = _dbContext.CustomFields.SingleOrDefault(cf => cf.id == 1);
+                customFields_Values.CustomField = existingCustomField;
+                customFields_Values.Listing = listing;
                 _dbContext.CustomFields_Values.Add(customFields_Values);
                 _dbContext.SaveChanges();
             }
@@ -388,72 +501,116 @@ namespace HomelistiAPI.Controllers
             customFields_Values = new CustomFields_Values();
             customFields_val_id += 1;
             customFields_Values.id = customFields_val_id;
+            customFields_Values.Valuess = new Valuess();
+            
             switch (category_id)
             {
                 case 112:
+                    Valuess existValues13 = _dbContext.Valuesses.SingleOrDefault(val => val.id == 13);
                     customFields_Values.values_id = 13;
+                    customFields_Values.Valuess = existValues13;
                     break;
                 case 162:
+                    Valuess existValues14 = _dbContext.Valuesses.SingleOrDefault(val => val.id == 14);
                     customFields_Values.values_id = 14;
+                    customFields_Values.Valuess = existValues14;
                     break;
                 case 204:
+                    Valuess existValues15 = _dbContext.Valuesses.SingleOrDefault(val => val.id == 15);
                     customFields_Values.values_id = 15;
+                    customFields_Values.Valuess = existValues15;
                     break;
                 default:
+                    customFields_Values.Valuess.id = 13;
                     customFields_Values.values_id = 13;
                     break;
             }
-            customFields_Values.custom_fields_id = 4323;
-            customFields_Values.listing_id = listing_id;
+            customFields_Values.custom_fields_id = 2;
+            customFields_Values.CustomField = new CustomField();
+            CustomField existingCustomFieldv2 = _dbContext.CustomFields.SingleOrDefault(cf => cf.id == 2);
+            customFields_Values.CustomField = existingCustomFieldv2;
+            customFields_Values.Listing = listing;
             _dbContext.CustomFields_Values.Add(customFields_Values);
             _dbContext.SaveChanges();
 
             customFields_Values = new CustomFields_Values();
             customFields_val_id += 1;
             customFields_Values.id = customFields_val_id;
-            customFields_Values.values_id = parking;
-            customFields_Values.custom_fields_id = 4322;
-            customFields_Values.listing_id = listing_id;
+            customFields_Values.Valuess = new Valuess();
+            customFields_Values.CustomField = new CustomField();
+            customFields_Values.values_id = parking;  //parking se duoc gan cho so 16
+            Valuess existValues16 = _dbContext.Valuesses.SingleOrDefault(val => val.id == 16);
+            customFields_Values.Valuess = existValues16;
+            customFields_Values.custom_fields_id = 3;
+            CustomField existingCustomFieldv3 = _dbContext.CustomFields.SingleOrDefault(cf => cf.id == 3);
+            customFields_Values.CustomField = existingCustomFieldv3;
+            customFields_Values.Listing = listing;
             _dbContext.CustomFields_Values.Add(customFields_Values);
             _dbContext.SaveChanges();
 
             customFields_Values = new CustomFields_Values();
             customFields_val_id += 1;
             customFields_Values.id = customFields_val_id;
-            customFields_Values.values_id = bed;
-            customFields_Values.custom_fields_id = 4316;
-            customFields_Values.listing_id = listing_id;
+            customFields_Values.Valuess = new Valuess();
+            customFields_Values.CustomField = new CustomField();
+            customFields_Values.values_id = bed; // bed se duoc gan cho so 17
+            Valuess existValues17 = _dbContext.Valuesses.SingleOrDefault(val => val.id == 17);
+            customFields_Values.Valuess = existValues17;
+            
+            customFields_Values.custom_fields_id = 4;
+            CustomField existingCustomFieldv4 = _dbContext.CustomFields.SingleOrDefault(cf => cf.id == 4);
+            customFields_Values.CustomField = existingCustomFieldv4;
+            customFields_Values.Listing = listing;
             _dbContext.CustomFields_Values.Add(customFields_Values);
             _dbContext.SaveChanges();
 
             customFields_Values = new CustomFields_Values();
             customFields_val_id += 1;
             customFields_Values.id = customFields_val_id;
-            customFields_Values.values_id = bath;
-            customFields_Values.custom_fields_id = 4321;
-            customFields_Values.listing_id = listing_id;
+            customFields_Values.Valuess = new Valuess();
+            customFields_Values.CustomField = new CustomField();
+            customFields_Values.values_id = bath; // bath se duoc gan cho so 18
+            Valuess existValues18 = _dbContext.Valuesses.SingleOrDefault(val => val.id == 18);
+            customFields_Values.Valuess = existValues18;
+            
+            customFields_Values.custom_fields_id = 5;
+            CustomField existingCustomFieldv5 = _dbContext.CustomFields.SingleOrDefault(cf => cf.id == 5);
+            customFields_Values.CustomField = existingCustomFieldv5;
+            customFields_Values.Listing = listing;
             _dbContext.CustomFields_Values.Add(customFields_Values);
             _dbContext.SaveChanges();
 
             customFields_Values = new CustomFields_Values();
             customFields_val_id += 1;
             customFields_Values.id = customFields_val_id;
+            customFields_Values.Valuess = new Valuess();
+            
             switch (listing_type)
             {
                 case "sell":
                     customFields_Values.values_id = 28;
+                    Valuess existValues28 = _dbContext.Valuesses.SingleOrDefault(val => val.id == 28);
+                    customFields_Values.Valuess = existValues28;
+                    
                     break;
                 case "buy":
                     customFields_Values.values_id = 29;
+                    Valuess existValues29 = _dbContext.Valuesses.SingleOrDefault(val => val.id == 28);
+                    customFields_Values.Valuess = existValues29;
                     break;
                 case "rent":
                     customFields_Values.values_id = 30;
+                    Valuess existValues30 = _dbContext.Valuesses.SingleOrDefault(val => val.id == 28);
+                    customFields_Values.Valuess = existValues30;
                     break;
                 default:
                     break;
             }
-            customFields_Values.custom_fields_id = 4692;
-            customFields_Values.listing_id = listing_id;
+            customFields_Values.CustomField = new CustomField();
+            customFields_Values.custom_fields_id = 6;
+            CustomField existingCustomFieldv6 = _dbContext.CustomFields.SingleOrDefault(cf => cf.id == 6);
+            customFields_Values.CustomField = existingCustomFieldv6;
+            customFields_Values.Listing = listing;
             _dbContext.CustomFields_Values.Add(customFields_Values);
             _dbContext.SaveChanges();
 

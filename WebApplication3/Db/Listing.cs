@@ -40,7 +40,7 @@ using System;
 
     public string price { get; set; }
 
-    //public Nullable<int> category_term_id { get; set; }
+    //public Nullable<int> Category_term_id { get; set; }
 
     public string ad_type_id { get; set; }
 
